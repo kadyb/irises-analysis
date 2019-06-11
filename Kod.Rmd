@@ -3,13 +3,22 @@ title: |
   <center> **Rekrutacja Code4LifeAcademy** </center>
   <center> **Zadanie 1** </center>
 author: "<center> **Krzysztof Dyba** </center>"
+date: "<center> `r Sys.Date()` </center>"
 output: 
   html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
     theme: spacelab
     highlight: tango
 ---
 
 ## **Wczytanie bibliotek**
+
+```{r message=FALSE, warning=FALSE}
+library("tidyr")
+library("ggplot2")
+```
 
 
 ## **Wczytanie danych**
@@ -22,4 +31,54 @@ dane$Petal.Width = as.numeric(as.character(dane$Petal.Width))
 
 W 133 wierszu kolumny *Petal.Width* zamiast kropki jako separatora dziesiętnego użyto przecinka. Taki błąd powoduje nieprawidłowe oznaczenie typu danych jako tekstowy, a przy konwersji na postać liczbową zwraca w danej komórce brak danych (NA). Separator zmieniono na kropkę, a następnie typ kolumny na liczbowy.
 
-## **Eksploracja danych** 
+## **Eksploracja danych** {.tabset .tabset-fade}
+
+### Opis
+
+```{r}
+str(dane)
+```
+
+Zbiór danych składa się ze 150 obiektów i 5 zmiennych (czterech numerycznych i jednej kategoryzującej). Zmienne numeryczne kolejno określają długość i szerokość kielicha kwiatu (*sepal*) oraz długość i szerokość płatka kwiatu (*petal*). Wartości wyrażone są w centymetrach.
+
+### Klasy
+
+```{r collapse=TRUE}
+levels(dane$Species)
+table(dane$Species)
+```
+
+Zmienna kategoryzująca składa się z trzech gatunków irysów, tj. **setosa**, **versicolor** i **virginica**. Każdy rodzaj irysu zawiera taką samą liczbę obserwacji, a więc nie występuje problem niezbalansowania klas.
+
+### Braki wartości
+
+```{r collapse=TRUE}
+apply(dane[1:4], 2, function(x) any(is.na(x)))
+sum(is.na(dane$Sepal.Width))
+which(is.na(dane$Sepal.Width))
+dane$Sepal.Width[82] = round(mean(dane$Sepal.Width[dane$Species == "versicolor"], na.rm = TRUE), 1)
+```
+
+Tylko kolumna *Sepal.Width* posiadała jedną brakującą wartość (NA). Pomiar został pominięty dla irysu versicolor. Obliczono średnią wartość szerokości kielicha dla tego gatunku irysa (tj. 2,78) i następnie uzupełniono brakujący pomiar.
+
+### Wartości odstające
+
+```{r fig.height=3.5}
+dane_long = gather(dane, "zmienna", "wartosc", 1:4)
+ggplot(dane_long, aes(x = zmienna, y = wartosc)) + 
+  geom_boxplot(aes(colour = Species)) +
+  xlab("Zmienna") +
+  ylab("Wartość [cm]") +
+  labs(colour = "Gatunek") +
+  theme_light()
+```
+
+W przypadku zmiennej *Sepal.Length* widoczna jest jedna wartość ujemna równa -4.8 cm. Jest to oczywiście wartość nieprawidłowa. Prawdopodobnie znak minus został dopisany omyłkowo. 
+
+```{r}
+dane$Sepal.Length[dane$Sepal.Length == -4.8] = abs(-4.8)
+dane_long$wartosc[dane_long$wartosc == -4.8] = abs(-4.8)
+```
+
+Błąd poprawiono poprzez zmianę na wartość dodatnią.
+Nie zauważono innych wartości silnie odstających, które wynikałyby z błędnego zapisu.
