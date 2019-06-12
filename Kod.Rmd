@@ -15,9 +15,14 @@ output:
 
 ## **Wczytanie bibliotek**
 
-```{r message=FALSE, warning=FALSE}
+```{r message = FALSE, warning = FALSE}
+library("MASS")
+library("e1071")
 library("tidyr")
+library("caret")
+library("GGally")
 library("ggplot2")
+library("doParallel")
 ```
 
 
@@ -43,7 +48,7 @@ Zbiór danych składa się ze 150 obiektów i 5 zmiennych (czterech numerycznych
 
 ### Klasy
 
-```{r collapse=TRUE}
+```{r collapse = TRUE}
 levels(dane$Species)
 table(dane$Species)
 ```
@@ -52,7 +57,7 @@ Zmienna kategoryzująca składa się z trzech gatunków irysów, tj. **setosa**,
 
 ### Braki wartości
 
-```{r collapse=TRUE}
+```{r collapse = TRUE}
 apply(dane[1:4], 2, function(x) any(is.na(x)))
 sum(is.na(dane$Sepal.Width))
 which(is.na(dane$Sepal.Width))
@@ -63,7 +68,7 @@ Tylko kolumna *Sepal.Width* posiadała jedną brakującą wartość (NA). Pomiar
 
 ### Wartości odstające
 
-```{r fig.height=3.5}
+```{r fig.height = 3.5}
 dane_long = gather(dane, "zmienna", "wartosc", 1:4)
 ggplot(dane_long, aes(x = zmienna, y = wartosc)) + 
   geom_boxplot(aes(colour = Species)) +
@@ -82,3 +87,42 @@ dane_long$wartosc[dane_long$wartosc == -4.8] = abs(-4.8)
 
 Błąd poprawiono poprzez zmianę na wartość dodatnią.
 Nie zauważono innych wartości silnie odstających, które wynikałyby z błędnego zapisu.
+
+## **Analiza danych** 
+
+```{r message = FALSE}
+ggpairs(dane, mapping = aes(color = Species), 
+        columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")) +
+  theme_light()
+```
+
+### {.tabset .tabset-fade}
+
+#### Statystyki
+
+```{r}
+aggregate(. ~ Species, data = dane, mean)
+```
+
+Powyżej zestawiono średnie wartości zmiennych objaśniająych dla poszczególnych gatunków irysów. Gatunek **setosa** jest średnio najmniejszy pod względem długości i szerokości płatków kwiatu (*petal*), natomiast gatunek **virginica** charakteryzuje się ich największym średnim rozmiarem.
+
+#### Korelacja
+Gatunek **setosa** cechuję się największą korelacją równą 0,74 pomiędzy długością a szerokością kielicha kwiatu (*sepal*). Dla innych zmiennych korelacja jest mniejsza niż 0,33. <br>
+Gatunek **versicolor** odznacza się największą korelacją między długością a szerokością płatka kwiatu (*petal*) wynoszącą 0,79. Mniejszą korelację równą 0,75 odnotowano dla długości płatka oraz szerokości kielich kwiatu. Pozostałe zmienne są umiarkowanie skorelowane. <br>
+Gatunek **virginica** posiada największą zależność między długością płatka i długością kielicha kwiatu na poziomie 0,86. Najniższą korelację można zauważyc w przypadku szerokości płatka a długością kielicha kwiatu.
+
+#### Rozkład
+W większości przypadków rozkład zmiennych nie jest zbliżony do rozkładu normalnego. Wyjątek stanowią długość i szerokość płatków irysów gatunku **versicolor** i **virginica**.
+
+#### Klasyfikacja
+
+```{r fig.height = 3.5}
+ggplot(dane_long, aes(wartosc, zmienna)) +
+  geom_jitter(aes(colour = Species), width = 0, alpha = 0.8) +
+  xlab("Wartość [cm]") +
+  ylab("Zmienna") +
+  labs(colour = "Gatunek") +
+  theme_light()
+```
+
+Analizując dwie powyższe ryciny można bez problemu wydzielić gatunek **setosa** na podstawie dwóch zmiennych *Petal.Width* i *Petal.Length*. Większy problem może pojawić się przy klasyfikacji gatunków **versicolor** i **virginica**, ponieważ obiekty tych dwóch gatunków wzajemnie się pokrywają w niektórych przypadkach. Prawdopodobnie przy takiej sytuacji również zmienne *Petal.Width* i *Petal.Length* będą odgrywały najważniejszą rolę.
