@@ -205,9 +205,10 @@ ggplot(resamps, metric = "Accuracy", conf.level = 0.99) +
   ylab("Dokładność") +
   labs(title = "Skuteczność klasyfikacji", subtitle = "Przedział ufności: 0,99") +
   theme_light()
+saveRDS(LDA_mdl, "model_LDA.rds")
 ```
 
-Najbardziej skutecznym (o najwyższej wartości miary dokładności) okazał się model oparty o liniową analizę dyskryminacyjną (**LDA**) przy przedziale ufności równym 0,99. Końcowo wartość dokładności wyniosła ponad 0,98 w procesie resamplingu.
+Najbardziej skutecznym (o najwyższej wartości miary dokładności) okazał się model oparty o liniową analizę dyskryminacyjną (**LDA**) przy przedziale ufności równym 0,99. W procesie resamplingu ostateczna wartość dokładności wyniosła ponad 0,98.
 
 ### Walidacja
 
