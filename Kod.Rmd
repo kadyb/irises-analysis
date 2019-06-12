@@ -232,3 +232,23 @@ ggplot(imps, aes(x = reorder(zmienna, istotnosc), y = istotnosc)) +
 ```
 
 W przypadku modelu **LDA** potwierdziły się wcześniejsze przypuszczenia, że najbardziej pomocnymi w rozróżnieniu gatunków okażą się zmienne *Petal.Width* i *Petal.Length*. Najmniej istotną zmienną okazała się *Sepal.Width* dla gatunku **virginica**.
+
+## **Podsumowanie**
+
+Eksploracja danych ujawniła, że zbiór danych wejściowych zawierał pewne nieprawidłowości (np. wartość ujemna, brak wartości czy zły typ danych), które zostały poprawione. Równoliczność poszczególnych gatunków irysów zapewniła wiarygodną ocenę skuteczności klasyfikacji. <br>
+
+Przeprowadzenie analizy danych pozwoliło odkryć korelację między pewnymi cechami badanych gatunków irysów, a także określić, które zmienne potencjalnie mogą okazać się najbardziej przydatne do opracowania modelu. <br>
+
+Przetestowano trzy najpopularniejsze modele **SVM**, **RF** i **LDA**. Model **LDA** zapewnił najlepsze wyniki, tj. dla zbioru treningowego równą ponad **98%** poprawnych klasyfikacji, a dla daych testowych około **97%**. Uzyskane wyniki potwierdziły możliwości stosowania metod uczenia maszynowego do efektywnej i dokładnej klasyfikacji gatunków irysów. Opracowany i pozytywnie zweryfikowany model może zostać wykorzystany do celów komercyjnych. <br>
+
+Wynki niniejszego opracowania są w pełni powtarzalne, dzięki zastosowaniu jednakowego ziarna losowości.
+
+## **Dalsze możliwości**
+
+Mimo uzyskania klasyfikatora o bardzo dużej skutecznośni, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie porawie, a jedynie zwiększy się czas obliczeń.
+
+Proponowane dalsze działania:
+
++ redukcja wymiarowości poprzez analizę głównych składowych i transformacja danych (normalizacja i transformacja Boxa-Coxa), 
++ wykorzystanie algorymtu typu *gradient boosting* (**xgboost**),
++ zwiększenie przestrzeni parametrów optymalizacyjnych dla modeli **SVM** i **RF**.
