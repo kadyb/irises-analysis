@@ -13,6 +13,11 @@ output:
     highlight: tango
 ---
 
+<style>
+body {
+text-align: justify}
+</style>
+
 ## **Wczytanie bibliotek**
 
 ```{r message = FALSE, warning = FALSE}
@@ -53,7 +58,7 @@ levels(dane$Species)
 table(dane$Species)
 ```
 
-Zmienna kategoryzująca składa się z trzech gatunków irysów, tj. **setosa**, **versicolor** i **virginica**. Każdy rodzaj irysu zawiera taką samą liczbę obserwacji, a więc nie występuje problem niezbalansowania klas.
+Zmienna kategoryzująca składa się z trzech gatunków irysów, tj. **setosa**, **versicolor** i **virginica**. Każdy rodzaj irysów zawiera taką samą liczbę obserwacji, a więc nie występuje problem niezbalansowania klas.
 
 ### Braki wartości
 
@@ -64,7 +69,7 @@ which(is.na(dane$Sepal.Width))
 dane$Sepal.Width[82] = round(mean(dane$Sepal.Width[dane$Species == "versicolor"], na.rm = TRUE), 1)
 ```
 
-Tylko kolumna *Sepal.Width* posiadała jedną brakującą wartość (NA). Pomiar został pominięty dla irysu versicolor. Obliczono średnią wartość szerokości kielicha dla tego gatunku irysa (tj. 2,78) i następnie uzupełniono brakujący pomiar.
+Tylko kolumna *Sepal.Width* posiadała jedną brakującą wartość (NA). Pomiar został pominięty dla irysa **versicolor**. Obliczono średnią wartość szerokości kielicha dla tego gatunku (tj. 2,78), a następnie uzupełniono brakujący pomiar.
 
 ### Wartości odstające
 
@@ -104,12 +109,12 @@ ggpairs(dane, mapping = aes(color = Species),
 aggregate(. ~ Species, data = dane, mean)
 ```
 
-Powyżej zestawiono średnie wartości zmiennych objaśniająych dla poszczególnych gatunków irysów. Gatunek **setosa** jest średnio najmniejszy pod względem długości i szerokości płatków kwiatu (*petal*), natomiast gatunek **virginica** charakteryzuje się ich największym średnim rozmiarem.
+Powyżej zestawiono średnie wartości zmiennych objaśniających dla poszczególnych gatunków irysów. Gatunek **setosa** jest średnio najmniejszy pod względem długości i szerokości płatków kwiatu (*petal*), natomiast gatunek **virginica** charakteryzuje się ich największym średnim rozmiarem.
 
 #### Korelacja
 Gatunek **setosa** cechuję się największą korelacją równą 0,74 pomiędzy długością a szerokością kielicha kwiatu (*sepal*). Dla innych zmiennych korelacja jest mniejsza niż 0,33. <br>
 Gatunek **versicolor** odznacza się największą korelacją między długością a szerokością płatka kwiatu (*petal*) wynoszącą 0,79. Mniejszą korelację równą 0,75 odnotowano dla długości płatka oraz szerokości kielich kwiatu. Pozostałe zmienne są umiarkowanie skorelowane. <br>
-Gatunek **virginica** posiada największą zależność między długością płatka i długością kielicha kwiatu na poziomie 0,86. Najniższą korelację można zauważyc w przypadku szerokości płatka a długością kielicha kwiatu.
+Gatunek **virginica** posiada największą zależność między długością płatka i długością kielicha kwiatu na poziomie 0,86. Najniższą korelację można zauważyć w przypadku szerokości płatka a długością kielicha kwiatu.
 
 #### Rozkład
 W większości przypadków rozkład zmiennych nie jest zbliżony do rozkładu normalnego. Wyjątek stanowią długość i szerokość płatków irysów gatunku **versicolor** i **virginica**.
@@ -239,16 +244,16 @@ Eksploracja danych ujawniła, że zbiór danych wejściowych zawierał pewne nie
 
 Przeprowadzenie analizy danych pozwoliło odkryć korelację między pewnymi cechami badanych gatunków irysów, a także określić, które zmienne potencjalnie mogą okazać się najbardziej przydatne do opracowania modelu. <br>
 
-Przetestowano trzy najpopularniejsze modele **SVM**, **RF** i **LDA**. Model **LDA** zapewnił najlepsze wyniki, tj. dla zbioru treningowego równą ponad **98%** poprawnych klasyfikacji, a dla daych testowych około **97%**. Uzyskane wyniki potwierdziły możliwości stosowania metod uczenia maszynowego do efektywnej i dokładnej klasyfikacji gatunków irysów. Opracowany i pozytywnie zweryfikowany model może zostać wykorzystany do celów komercyjnych. <br>
+Przetestowano trzy najpopularniejsze modele **SVM**, **RF** i **LDA**. Model **LDA** zapewnił najlepsze wyniki, tj. dla zbioru treningowego wynoszącą ponad **98%** poprawnych klasyfikacji, a dla danych testowych około **97%**. Uzyskane wyniki potwierdziły możliwości stosowania metod uczenia maszynowego do efektywnej i dokładnej klasyfikacji gatunków irysów. Opracowany i pozytywnie zweryfikowany model może zostać wykorzystany do celów komercyjnych. <br>
 
-Wynki niniejszego opracowania są w pełni powtarzalne, dzięki zastosowaniu jednakowego ziarna losowości.
+Wyniki niniejszego opracowania są w pełni powtarzalne, dzięki zastosowaniu jednakowego ziarna losowości.
 
 ## **Dalsze możliwości**
 
-Mimo uzyskania klasyfikatora o bardzo dużej skutecznośni, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie porawie, a jedynie zwiększy się czas obliczeń.
+Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie poprawie, a jedynie zwiększy się czas obliczeń.
 
 Proponowane dalsze działania:
 
 + redukcja wymiarowości poprzez analizę głównych składowych i transformacja danych (normalizacja i transformacja Boxa-Coxa), 
-+ wykorzystanie algorymtu typu *gradient boosting* (**xgboost**),
++ wykorzystanie algorytmu typu *gradient boosting* (**xgboost**),
 + zwiększenie przestrzeni parametrów optymalizacyjnych dla modeli **SVM** i **RF**.
