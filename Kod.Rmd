@@ -126,3 +126,109 @@ ggplot(dane_long, aes(wartosc, zmienna)) +
 ```
 
 Analizując dwie powyższe ryciny można bez problemu wydzielić gatunek **setosa** na podstawie dwóch zmiennych *Petal.Width* i *Petal.Length*. Większy problem może pojawić się przy klasyfikacji gatunków **versicolor** i **virginica**, ponieważ obiekty tych dwóch gatunków wzajemnie się pokrywają w niektórych przypadkach. Prawdopodobnie przy takiej sytuacji również zmienne *Petal.Width* i *Petal.Length* będą odgrywały najważniejszą rolę.
+
+## **Uczenie maszynowe** {.tabset .tabset-fade}
+
+### Podział zbioru
+
+```{r}
+# ustawienie ziarna losowości (powtarzalność wyników)
+set.seed(1)
+
+trainIndex = createDataPartition(dane$Species, p = 0.8, list = FALSE)
+train = dane[ trainIndex, ]
+test = dane[-trainIndex, ]
+```
+
+Zbiór danych wejściowych podzielono równomiernie z uwzględnieniem gatunków irysów na zbiór treningowy (120 obiektów) i testowy (30 obiektów).
+
+### Trenowanie modeli
+
+```{r} 
+set.seed(1)
+seeds = vector(mode = "list", length = 101) # length = number * repeats + 1
+for(i in 1:101) seeds[[i]] = sample.int(n = 1000, 6)
+
+# kroswalidacja 10-fold
+fitControl = trainControl(method = "repeatedcv", 
+                          number = 10, 
+                          repeats = 10, 
+                          seeds = seeds)
+
+# równoległe tworzenie modeli
+n_cores = detectCores() - 1
+cl = makePSOCKcluster(n_cores)
+registerDoParallel(cl)
+
+# trenowanie modeli
+SVM_mdl = train(Species ~ ., data = train, 
+                method = "svmLinear2", 
+                trControl = fitControl,
+                metric = "Accuracy")
+
+RF_mdl = train(Species ~ ., data = train,
+               method = "ranger",
+               trControl = fitControl,
+               metric = "Accuracy")
+
+LDA_mdl = train(Species ~ ., data = train,
+                method = "lda2",
+                trControl = fitControl,
+                metric = "Accuracy")
+
+stopCluster(cl)
+```
+
+Wybrano trzy najpopularniejsze algorytmy o potwierdzonej wysokiej skuteczności w literaturze naukowej, tj. metodę wektorów nośnych (**SVM**), lasy losowe (**RF**) i liniową analizę dyskryminacyjną (**LDA**). <br>
+
+Do resamplingu użyto kroswalidację 10-fold, gdzie również zbiór treningowy dzielony jest na treningowy (9 foldów) i testowy (1 fold) dla wszystkich kombinacji i proces powtarzany jest n razy. Dzięki takiemu zabiegowi można uniknąć przeuczenia  (*overfitted*), tj. sytuacji, gdzie model nauczył się danych treningowych, a nie ogólnego trendu w danych. <br>
+
+Za miarę skuteczności przyjęto dokładność (*accuracy*) definiowaną jako iloraz sumy klasyfikacji prawdziwie pozytywnych i prawdziwie negatywnych do wszystkich możliwości. Z racji iż zbiór danych testowych i treningowych jest zbalansowany, nie istnieją przesłanki o nieskuteczności (obciążeniu) tej miary. <br>
+
+W celu skrócenia czasu obliczeń, zostawiono domyślne parametry optymalizacyjne w gridzie. Jednakże, aby uzyskać optymalne modele, przestrzeń optymalizacji parametrów powinna zostać rozszerzona, co tym samym wpłynie na czas potrzebny na uzyskanie wyników. <br>
+
+Podział danych na zbiór treningowy i testowy oraz resampling są operacjami losowymi, a więc każde wywołanie zwróci inne wyniki. Aby zapewnić powtarzalność wyników i możliwość odtworzenia analizy ustawiono stałe ziarna losowości. <br>
+
+Obliczenia zostały zrównoleglone za pomocą 3 wątków procesora.
+
+### Porównanie modeli
+
+```{r fig.height = 3.5}
+resamps = resamples(list(SVM = SVM_mdl, RF = RF_mdl, LDA = LDA_mdl))
+ggplot(resamps, metric = "Accuracy", conf.level = 0.99) +
+  xlab("Model") +
+  ylab("Dokładność") +
+  labs(title = "Skuteczność klasyfikacji", subtitle = "Przedział ufności: 0,99") +
+  theme_light()
+```
+
+Najbardziej skutecznym (o najwyższej wartości miary dokładności) okazał się model oparty o liniową analizę dyskryminacyjną (**LDA**) przy przedziale ufności równym 0,99. Końcowo wartość dokładności wyniosła ponad 0,98 w procesie resamplingu.
+
+### Walidacja
+
+```{r}
+pred = predict(LDA_mdl, test)
+confusionMatrix(pred, test$Species)
+```
+
+Następnie dokonano walidacji na podstawie wcześniej wyznaczonego zbioru testowego (niezależnego). Wyniki testu potwierdziły bardzo wysoką skuteczność modelu (*accuracy*) **LDA** wynoszącą w zaokrągleniu 0,97. Model pomylił się tylko raz na 30 przypadków (nastąpiło błędne przypisane gatunku **virginica** zamiast **versicolor**). Jednak już na etapie analizy danych przewidziano trudności w klasyfikacji tych dwóch gatunków, wynikające ze zbliżonych cech charakterystyki gatunkowej.
+
+### Istotność zmiennych
+
+```{r fig.height = 3.5}
+imps = data.frame(varImp(LDA_mdl)$importance)
+imps$zmienna = rownames(imps)
+imps = gather(imps, "gatunek", "istotnosc", 1:3)
+
+ggplot(imps, aes(x = reorder(zmienna, istotnosc), y = istotnosc)) +
+  geom_col(width = 0.01, fill = "black") +
+  geom_point() +
+  coord_flip() +
+  facet_wrap(. ~ gatunek) +
+  xlab("Zmienna") +
+  ylab("Istotność") +
+  labs(subtitle = "Liniowa analiza dyskryminacyjna") +
+  theme_light()
+```
+
+W przypadku modelu **LDA** potwierdziły się wcześniejsze przypuszczenia, że najbardziej pomocnymi w rozróżnieniu gatunków okażą się zmienne *Petal.Width* i *Petal.Length*. Najmniej istotną zmienną okazała się *Sepal.Width* dla gatunku **virginica**.
