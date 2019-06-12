@@ -1,5 +1,4 @@
-# taskRoche
-Rekrutacja Code4LifeAcademy - zadanie 1
+# Rekrutacja Code4LifeAcademy - zadanie 1
 
 Projekt zawiera:
 1. Kod.Rmd - kod źródłowy R Notebook
