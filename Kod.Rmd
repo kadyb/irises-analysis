@@ -21,7 +21,6 @@ body {text-align: justify}
 startTime = Sys.time()
 ```
 
-
 ## **Wczytanie bibliotek**
 
 ```{r message = FALSE, warning = FALSE}
@@ -33,7 +32,6 @@ library("GGally")
 library("ggplot2")
 library("doParallel")
 ```
-
 
 ## **Wczytanie danych**
 
