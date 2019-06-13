@@ -14,9 +14,13 @@ output:
 ---
 
 <style>
-body {
-text-align: justify}
+body {text-align: justify}
 </style>
+
+```{r include=FALSE}
+startTime = Sys.time()
+```
+
 
 ## **Wczytanie bibliotek**
 
@@ -262,3 +266,9 @@ Proponowane dalsze działania:
 + redukcja wymiarowości poprzez analizę głównych składowych i transformacja danych (normalizacja i transformacja Boxa-Coxa), 
 + wykorzystanie algorytmu typu *gradient boosting* (**xgboost**),
 + zwiększenie przestrzeni parametrów optymalizacyjnych dla modeli **SVM** i **RF**.
+
+---
+
+<center> <font size = "2"> <i>
+Kod został wykonany w ciągu `r round(difftime(Sys.time(), startTime, units = "secs"))` s.
+<center> </font> </i>
