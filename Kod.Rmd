@@ -188,7 +188,7 @@ stopCluster(cl)
 
 Wybrano trzy najpopularniejsze algorytmy o potwierdzonej wysokiej skuteczności w literaturze naukowej, tj. metodę wektorów nośnych (**SVM**), lasy losowe (**RF**) i liniową analizę dyskryminacyjną (**LDA**). <br>
 
-Do resamplingu użyto kroswalidację 10-fold, gdzie również zbiór treningowy dzielony jest na treningowy (9 foldów) i testowy (1 fold) dla wszystkich kombinacji i proces powtarzany jest n razy. Dzięki takiemu zabiegowi można uniknąć przeuczenia  (*overfitted*), tj. sytuacji, gdzie model nauczył się danych treningowych, a nie ogólnego trendu w danych. <br>
+Do resamplingu użyto kroswalidację 10-fold, gdzie również zbiór treningowy dzielony jest na treningowy (9 foldów) i testowy (1 fold) dla wszystkich kombinacji i proces powtarzany jest n razy. Dzięki takiemu zabiegowi można uniknąć przeuczenia  (*overfitting*), tj. sytuacji, gdzie model nauczył się danych treningowych, a nie ogólnego trendu w danych. <br>
 
 Za miarę skuteczności przyjęto dokładność (*accuracy*) definiowaną jako iloraz sumy klasyfikacji prawdziwie pozytywnych i prawdziwie negatywnych do wszystkich możliwości. Z racji iż zbiór danych testowych i treningowych jest zbalansowany, nie istnieją przesłanki o nieskuteczności (obciążeniu) tej miary. <br>
 
@@ -257,7 +257,7 @@ Wyniki niniejszego opracowania są w pełni powtarzalne, dzięki zastosowaniu je
 
 ## **Dalsze możliwości**
 
-Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie poprawie, a jedynie zwiększy się czas obliczeń i złożoność kodu.
+Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektywy poprawy wyników. Niemniej jednak może dojść do sytuacji, w której klasyfikacja nie ulegnie poprawie, a jedynie zwiększy się czas obliczeń i złożoność kodu.
 
 Proponowane dalsze działania:
 
