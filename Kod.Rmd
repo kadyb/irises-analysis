@@ -241,17 +241,17 @@ W przypadku modelu **LDA** potwierdziły się wcześniejsze przypuszczenia, że 
 
 ## **Podsumowanie**
 
-Eksploracja danych ujawniła, że zbiór danych wejściowych zawierał pewne nieprawidłowości (np. wartość ujemna, brak wartości czy zły typ danych), które zostały poprawione. Równoliczność poszczególnych gatunków irysów zapewniła wiarygodną ocenę skuteczności klasyfikacji. <br>
+Eksploracja danych ujawniła, że zbiór danych wejściowych zawierał pewne nieprawidłowości (np. wartość ujemna, brak wartości czy zły typ danych), które zostały poprawione. Równoliczność poszczególnych gatunków irysów umożliwiła wiarygodną ocenę skuteczności klasyfikacji. <br>
 
 Przeprowadzenie analizy danych pozwoliło odkryć korelację między pewnymi cechami badanych gatunków irysów, a także określić, które zmienne potencjalnie mogą okazać się najbardziej przydatne do opracowania modelu. <br>
 
-Przetestowano trzy najpopularniejsze modele **SVM**, **RF** i **LDA**. Model **LDA** zapewnił najlepsze wyniki, tj. dla zbioru treningowego wynoszącą ponad **98%** poprawnych klasyfikacji, a dla danych testowych około **97%**. Uzyskane wyniki potwierdziły możliwości stosowania metod uczenia maszynowego do efektywnej i dokładnej klasyfikacji gatunków irysów. Opracowany i pozytywnie zweryfikowany model może zostać wykorzystany do celów komercyjnych. <br>
+Przetestowano trzy najpopularniejsze modele **SVM**, **RF** i **LDA**. Model **LDA** zapewnił najlepsze rezultaty, tj. dla zbioru treningowego uzyskał ponad **98%** poprawnych klasyfikacji, a dla zbioru testowego około **97%**. Otrzymane wyniki potwierdziły możliwości stosowania metod uczenia maszynowego do efektywnej i dokładnej klasyfikacji gatunków irysów. Opracowany i pozytywnie zweryfikowany model może zostać wykorzystany do celów komercyjnych. <br>
 
 Wyniki niniejszego opracowania są w pełni powtarzalne, dzięki zastosowaniu jednakowego ziarna losowości.
 
 ## **Dalsze możliwości**
 
-Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie poprawie, a jedynie zwiększy się czas obliczeń.
+Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektywy poprawy wyników. Niemniej może okazać się, że klasyfikacja nie ulegnie poprawie, a jedynie zwiększy się czas obliczeń i złożoność kodu.
 
 Proponowane dalsze działania:
 
