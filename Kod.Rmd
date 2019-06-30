@@ -41,7 +41,7 @@ dane$Petal.Width[133] = "2.2"
 dane$Petal.Width = as.numeric(as.character(dane$Petal.Width))
 ```
 
-W 133 wierszu kolumny *Petal.Width* zamiast kropki jako separatora dziesiętnego użyto przecinka. Taki błąd powoduje nieprawidłowe oznaczenie typu danych jako tekstowy, a przy konwersji na postać liczbową zwraca w danej komórce brak danych (NA). Separator zmieniono na kropkę, a następnie typ kolumny na liczbowy.
+W 133 wierszu kolumny *Petal.Width* zamiast kropki jako separatora dziesiętnego użyto przecinka. Taki błąd powoduje nieprawidłowe oznaczenie typu danych jako tekstowy, a przy konwersji do postaci liczbowej zwracany jest brak danych (*NA*) w tejże komórce. Separator zmieniono na kropkę, a następnie typ kolumny na liczbowy.
 
 ## **Eksploracja danych** {.tabset .tabset-fade}
 
@@ -143,7 +143,7 @@ Analizując dwie powyższe ryciny można bez problemu wydzielić gatunek **setos
 set.seed(1)
 
 trainIndex = createDataPartition(dane$Species, p = 0.8, list = FALSE)
-train = dane[ trainIndex, ]
+train = dane[trainIndex, ]
 test = dane[-trainIndex, ]
 ```
 
