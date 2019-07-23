@@ -17,7 +17,7 @@ output:
 body {text-align: justify}
 </style>
 
-```{r include=FALSE}
+```{r include = FALSE}
 startTime = Sys.time()
 ```
 
@@ -104,7 +104,7 @@ W zbiorze danych znajduje się jeden zduplikowany wiersz z wartościami pomiarow
 
 ## **Analiza danych** 
 
-```{r message = FALSE}
+```{r message = FALSE, fig.width = 9}
 ggpairs(dane, mapping = aes(color = Species), 
         columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")) +
   theme_light()
