@@ -95,6 +95,13 @@ dane_long$wartosc[dane_long$wartosc == -4.8] = abs(-4.8)
 Błąd poprawiono poprzez zmianę na wartość dodatnią.
 Nie zauważono innych wartości silnie odstających, które wynikałyby z błędnego zapisu.
 
+### Duplikaty
+```{r}
+sum(duplicated(dane[1:4]))
+```
+
+W zbiorze danych znajduje się jeden zduplikowany wiersz z wartościami pomiarowymi (gatunek **virginica**). Nie jest to jednak żadna nieprawidłowość.
+
 ## **Analiza danych** 
 
 ```{r message = FALSE}
