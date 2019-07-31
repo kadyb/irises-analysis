@@ -5,5 +5,5 @@ Celem projektu było dokonanie analizy eksploracyjnej zbioru danych zawierające
 
 Projekt zawiera:
 1. Kod.Rmd - kod źródłowy R Notebook
-2. Raport.html 
+2. [Raport.html](https://kadyb.github.io/irises-analysis/Raport.html)
 3. model_LDA.rds - model klasyfikacyjny opracowany z wykorzystaniem bibiloteki `caret`
