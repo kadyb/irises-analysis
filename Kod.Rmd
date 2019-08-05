@@ -34,7 +34,7 @@ library("doParallel")
 ## **Wczytanie danych**
 
 ```{r}
-dane = read.csv("data/C4L Academy - Data Science Graduate - IRISES dataset (2019-06).csv", sep = "|")
+dane = read.csv("data/C4L_Academy-Data_Science_Graduate-IRISES_dataset_(2019-06).csv", sep = "|")
 dane$Petal.Width[133] = "2.2"
 dane$Petal.Width = as.numeric(as.character(dane$Petal.Width))
 ```
@@ -103,7 +103,9 @@ W zbiorze danych znajduje się jeden zduplikowany wiersz z wartościami pomiarow
 ## **Analiza danych** 
 
 ```{r message = FALSE, fig.width = 9}
-ggpairs(dane, mapping = aes(color = Species), 
+ggpairs(dane, mapping = aes(color = Species),
+        diag = list(continuous = wrap("densityDiag", alpha = 0.8)),
+        lower = list(continuous = wrap("points", alpha = 0.7)),
         columns = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")) +
   theme_light()
 ```
