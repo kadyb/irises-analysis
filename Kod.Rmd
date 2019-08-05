@@ -1,7 +1,5 @@
 ---
-title: |
-  <center> **Rekrutacja Code4LifeAcademy** </center>
-  <center> **Zadanie 1** </center>
+title: "<center> **Analiza i klasyfikacja gatunków irysów** </center>"
 author: "<center> **Krzysztof Dyba** </center>"
 date: "<center> `r Sys.Date()` </center>"
 output: 
@@ -36,7 +34,7 @@ library("doParallel")
 ## **Wczytanie danych**
 
 ```{r}
-dane = read.csv("C4L Academy - Data Science Graduate - IRISES dataset (2019-06).csv", sep = "|")
+dane = read.csv("data/C4L Academy - Data Science Graduate - IRISES dataset (2019-06).csv", sep = "|")
 dane$Petal.Width[133] = "2.2"
 dane$Petal.Width = as.numeric(as.character(dane$Petal.Width))
 ```
@@ -269,7 +267,7 @@ Mimo uzyskania klasyfikatora o bardzo dużej skuteczności, istnieją perspektyw
 Proponowane dalsze działania:
 
 + redukcja wymiarowości poprzez analizę głównych składowych i transformacja danych (normalizacja i transformacja Boxa-Coxa), 
-+ wykorzystanie algorytmu typu *gradient boosting* (**xgboost**),
++ wykorzystanie algorytmu typu *gradient boosting*, np. **xgboost**,
 + zwiększenie przestrzeni parametrów optymalizacyjnych dla modeli **SVM** i **RF**.
 
 ---
