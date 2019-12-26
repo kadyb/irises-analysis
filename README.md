@@ -4,5 +4,5 @@ The aim of the project was to perform an exploratory analysis of a dataset conta
 
 The project includes:
 1. Code.Rmd - R Notebook source code (Kod.Rmd - Polish version)
-2. [Report.html](https://kadyb.github.io/irises-analysis/Report.html) ([Raport.html](https://kadyb.github.io/irises-analysis/Report.html) - Polish version)
+2. [Report.html](https://kadyb.github.io/irises-analysis/Report.html) ([Raport.html](https://kadyb.github.io/irises-analysis/Raport.html) - Polish version)
 3. model_LDA.rds - classification model developed using the `caret` library
