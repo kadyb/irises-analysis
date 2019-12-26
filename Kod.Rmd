@@ -19,7 +19,9 @@ body {text-align: justify}
 startTime = Sys.time()
 ```
 
-## **Wczytanie bibliotek**
+## **Wczytanie bibliotek i danych**
+
+**Wczytanie bibliotek**
 
 ```{r message = FALSE, warning = FALSE}
 library("MASS")
@@ -31,7 +33,12 @@ library("ggplot2")
 library("doParallel")
 ```
 
-## **Wczytanie danych**
+```{r}
+# zapisz informacje o sesji
+writeLines(capture.output(sessionInfo()), "sessionInfo.txt")
+```
+
+**Wczytanie danych**
 
 ```{r}
 dane = read.csv("data/C4L_Academy-Data_Science_Graduate-IRISES_dataset_(2019-06).csv", sep = "|")
