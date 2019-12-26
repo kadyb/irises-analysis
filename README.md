@@ -1,9 +1,8 @@
-# Analiza zbioru danych zawierającego gatunki irysów
+# Analysis of a dataset with iris species
 
-Celem projektu było dokonanie analizy eksploracyjnej zbioru danych zawierającego trzy gatunki irysów (_setosa_, _virginica_ i _versicolor_) oraz opracowanie modelu klasyfikacyjnego. Efekt końcowy w postaci klasyfikatora został udostępiony za pomocą usługi [REST API](https://github.com/kadyb/model-REST-API).
+The aim of the project was to perform an exploratory analysis of a dataset containing three species of irises (_setosa_, _virginica_ and _versicolor_) and to develop a classification model. The final result in the form of a classifier was made available through the [REST API service](https://github.com/kadyb/model-REST-API).
 
-
-Projekt zawiera:
-1. Kod.Rmd - kod źródłowy R Notebook
-2. [Raport.html](https://kadyb.github.io/irises-analysis/Raport.html)
-3. model_LDA.rds - model klasyfikacyjny opracowany z wykorzystaniem bibiloteki `caret`
+The project includes:
+1. Code.Rmd - R Notebook source code (Kod.Rmd - Polish version)
+2. [Report.html](https://kadyb.github.io/irises-analysis/Report.html) ([Raport.html](https://kadyb.github.io/irises-analysis/Report.html) - Polish version)
+3. model_LDA.rds - classification model developed using the `caret` library
